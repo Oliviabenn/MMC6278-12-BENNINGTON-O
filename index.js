@@ -21,70 +21,58 @@ class Word {
     this.word = word
     this.displayWord = word.replaceAll(/[\w]/g, "_")
     this.remainingGuesses = 10
-    this.incorrectLetters = []
     this.correctLetters = []
-  }
-
-//
-  // implement the guessLetter function:
+    this.incorrectLetters = []
+}
+  //
   guessLetter(letter) {
-    if (this.incorrectLetters.includes(letter)||!/^[a-z]$/i.test(letter))/* || = double pipes aka "or" */ {
+    if (this.incorrectLetters.includes(letter)||!/^[a-z]$/i.test(letter)){
       return
     }
-
     if (this.word.includes(letter)){
       this.correctLetters.push(letter)
-      var matchingLocations=[]
+      var matchingLocations =[]
       for (var i=0; i<this.word.length; i++){
-        if (this.word[i]===letter){
+        if (this.word[i] === letter){
           matchingLocations.push(i);
         }
       }
-
       for (var j=0; j<matchingLocations.length; j++){
         this.displayWord=`${this.displayWord.substring(0,matchingLocations[j])}${letter}${this.displayWord.substring(matchingLocations[j]+1)}`
       }
-
     }
     else {
       this.incorrectLetters.push(letter)
       this.remainingGuesses --
     }
-
+  }
+  updateScreen() {
+    document.getElementById("word-to-guess").innerHTML = this.displayWord;
+    document.getElementById("incorrect-letters").innerHTML = this.incorrectLetters;
+    document.getElementById("remaining-guesses").innerHTML = this.remainingGuesses;
   }
 
-  // implement the updateScreen function:
-  updateScreen() {
-  document.getElementById("word-to-guess").innerHTML = this.displayWord;
-  document.getElementById("incorrect-letters").innerHTML = this.incorrectLetters;
-  document.getElementById("remaining-guesses").innerHTML = this.remainingGuesses;
+isGameOver() {
+  if (this.displayWord !== this.word && this.remainingGuesses > 0){
+    return false
+  }
+    return true
 }
-  // implement the isGameOver function:
-  isGameOver() {
-    if (this.displayWord!==this.word&&this.remainingGuesses>0){
-      return false
-    }
-      return true
-  };
 
-
-  // implement the getWinOrLoss function:
-  getWinOrLoss() {
-     if (this.displayWord === this.word && this.remainingGuesses > 0) {
-       return 'win'
-     } else if (this.displayWord !== this.word && this.remainingGuesses <= 0) {
-       return 'loss'
-     } else if (this.displayWord !== this.word && this.remainingGuesses > 0) {
-       return null
-     }
-   }
-   select(keys) {
-     return /^[a-z]/.test(keys)
-   }
- }
-
+getWinOrLoss() {
+  if (this.displayWord === this.word && this.remainingGuesses > 0) {
+    return 'win'
+  } else if (this.displayWord !== this.word && this.remainingGuesses <= 0) {
+    return 'loss'
+  } else if (this.displayWord !== this.word && this.remainingGuesses > 0) {
+    return null
+  }
+}
+select(keys) {
+  return /^[a-z]/.test(keys)
+}
+}
 //
-
 function newGame() {
   const randomWord = words[Math.floor(Math.random() * words.length)]
   currentWord = new Word(randomWord)
@@ -121,5 +109,4 @@ document.onkeyup = function(e) {
     newGame()
   }
 }
-
 newGame()
