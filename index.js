@@ -55,20 +55,18 @@ class Word {
 
   // implement the updateScreen function:
   updateScreen() {
-    const h2 = document.getElementById('word-to-guess')
-    h2.innerHTML = this.displayWord
-    const spanIncorrectLetters = document.getElementById('incorrect-letters')
-    spanIncorrectLetters.innerHTML = this.incorrectLetters
-    const spanRemainingGuesses = document.getElementById('remaining-guesses')
-    spanRemainingGuesses.innerHTML = this.remainingGuesses
-  }
+  document.getElementById("word-to-guess").innerHTML = this.displayWord;
+  document.getElementById("incorrect-letters").innerHTML = this.incorrectLetters;
+  document.getElementById("remaining-guesses").innerHTML = this.remainingGuesses;
+}
   // implement the isGameOver function:
   isGameOver() {
-    if (this.displayWord !== this.word && this.remainingGuesses > 0) {
+    if (this.displayWord!==this.word&&this.remainingGuesses>0){
       return false
     }
-    return true
-  }
+      return true
+  };
+
 
   // implement the getWinOrLoss function:
   getWinOrLoss() {
